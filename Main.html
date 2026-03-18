@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>USN Argentum | Autonomous Rescue Rover</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:     #0a0c10;
+      --bg2:    #0f1318;
+      --bg3:    #161b24;
+      --accent: #e8a020;
+      --accent2:#f0c060;
+      --text:   #e8eaf0;
+      --muted:  #7a8090;
+      --border: rgba(232,160,32,0.15);
+      --card:   rgba(22,27,36,0.85);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; }
+
+    /* NAV */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 2.5rem; height:68px;
+      background:rgba(10,12,16,0.92);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-logo {
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:1.5rem; font-weight:800; letter-spacing:0.05em;
+      color:var(--accent); text-decoration:none;
+    }
+    .nav-logo span { color:var(--text); }
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a {
+      color:var(--muted); text-decoration:none; font-size:0.9rem;
+      font-weight:500; letter-spacing:0.04em; text-transform:uppercase;
+      transition:color 0.2s;
+    }
+    .nav-links a:hover { color:var(--accent); }
+    .nav-cta {
+      background:var(--accent); color:#000;
+      padding:0.45rem 1.2rem; border-radius:4px;
+      font-size:0.85rem; font-weight:700; text-decoration:none;
+      letter-spacing:0.06em; text-transform:uppercase;
+      transition:background 0.2s;
+    }
+    .nav-cta:hover { background:var(--accent2); }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
+    .hamburger span { width:24px; height:2px; background:var(--text); display:block; }
+
+    /* HERO */
+    #hero {
+      min-height:100vh;
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      position:relative; overflow:hidden;
+      padding:100px 2.5rem 60px;
+      text-align:center;
+    }
+    .hero-bg {
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(232,160,32,0.07) 0%, transparent 70%),
+        linear-gradient(180deg, #0a0c10 0%, #0f1318 100%);
+    }
+    .hero-grid {
+      position:absolute; inset:0; opacity:0.04;
+      background-image:
+        linear-gradient(var(--accent) 1px, transparent 1px),
+        linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+      background-size:60px 60px;
+    }
+    .hero-content { position:relative; max-width:760px; }
+    .hero-title {
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:clamp(3.5rem,8vw,7rem);
+      font-weight:800; line-height:0.92;
+      letter-spacing:-0.01em; margin-bottom:2.5rem;
+    }
+    .hero-title .line1 { display:block; color:var(--text); }
+    .hero-title .line2 { display:block; color:var(--accent); }
+
+    /* SECTIONS */
+    section { padding:6rem 2.5rem; }
+    .btn-primary {
+      display:inline-block;
+      background:var(--accent); color:#000;
+      padding:0.75rem 2rem; border-radius:4px;
+      font-weight:700; text-decoration:none; font-size:0.9rem;
+      letter-spacing:0.06em; text-transform:uppercase;
+      transition:background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background:var(--accent2); transform:translateY(-2px); }
+    .section-label {
+      font-size:0.75rem; font-weight:700; letter-spacing:0.14em;
+      text-transform:uppercase; color:var(--accent); margin-bottom:0.75rem;
+    }
+    .section-title {
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:clamp(2.2rem,4vw,3.2rem); font-weight:800;
+      line-height:1.05; margin-bottom:1.2rem;
+    }
+    .section-body { color:var(--muted); line-height:1.8; max-width:620px; font-size:1rem; }
+    .container { max-width:1200px; margin:0 auto; }
+
+    /* ABOUT () */
+    #about { background:var(--bg2); }
+    .about-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start;
+    }
+    .about-text .section-body { max-width:100%; }
+    .about-details { margin-top:2rem; display:flex; flex-direction:column; gap:0; }
+    .about-detail-item {
+      padding:0.9rem 0; border-bottom:1px solid var(--border);
+      font-size:0.92rem; color:var(--muted); line-height:1.6;
+    }
+    .about-detail-item:last-child { border-bottom:none; }
+    .about-detail-label {
+      display:block; font-size:0.7rem; font-weight:700;
+      letter-spacing:0.1em; text-transform:uppercase;
+      color:var(--text); margin-bottom:0.2rem;
+    }
+    .rover-3d-link { text-decoration:none; display:block; }
+    .rover-3d-card {
+      border:1px solid var(--border); border-radius:8px; background:var(--bg3);
+      transition:border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .rover-3d-link:hover .rover-3d-card {
+      border-color:var(--accent); transform:translateY(-3px);
+      box-shadow:0 8px 24px rgba(232,160,32,0.1);
+    }
+    .rover-3d-card-inner { display:flex; align-items:center; gap:1.2rem; padding:1.8rem; }
+    .rover-3d-icon { flex-shrink:0; }
+    .rover-3d-card-text { flex:1; }
+    .rover-3d-card-title {
+      display:block; font-family:'Barlow Condensed',sans-serif;
+      font-size:1.2rem; font-weight:700; color:var(--text); margin-bottom:0.2rem;
+    }
+    .rover-3d-card-sub { display:block; font-size:0.82rem; color:var(--muted); }
+    .rover-3d-card-arrow { font-size:1.2rem; color:var(--accent); transition:transform 0.2s; }
+    .rover-3d-link:hover .rover-3d-card-arrow { transform:translateX(4px); }
+
+    /* TEAM */
+    #team { background:var(--bg2); }
+    .team-grid {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+      gap:1.5rem; margin-top:3rem;
+    }
+    .team-card {
+      background:var(--bg3); border:1px solid var(--border); border-radius:8px;
+      padding:1.8rem 1.5rem; transition:border-color 0.2s, transform 0.2s;
+    }
+    .team-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+    .team-card-role {
+      font-size:0.7rem; font-weight:700; letter-spacing:0.12em;
+      text-transform:uppercase; color:var(--accent); margin-bottom:0.5rem;
+    }
+    .team-card h4 {
+      font-family:'Barlow Condensed',sans-serif; font-size:1.25rem;
+      font-weight:700; margin-bottom:0.3rem; color:var(--text);
+    }
+    .team-card-faculty { font-size:0.8rem; color:var(--muted); }
+
+    /* SPONSORS */
+    #sponsors { background:var(--bg); }
+    .sponsor-placeholder {
+      display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center; margin-top:3rem;
+    }
+    .sponsor-slot {
+      width:160px; height:80px;
+      border:1px dashed rgba(232,160,32,0.25); border-radius:6px;
+      display:flex; align-items:center; justify-content:center;
+      color:rgba(232,160,32,0.3); font-size:0.75rem;
+      letter-spacing:0.1em; text-transform:uppercase;
+    }
+    .sponsor-slot.usn {
+      border-style:solid; border-color:var(--border);
+      background:rgba(232,160,32,0.05); color:var(--accent); font-weight:700;
+    }
+    .sponsor-note {
+      background:var(--bg3); border:1px solid var(--border); border-radius:8px;
+      padding:3rem; text-align:center; margin-top:3rem;
+    }
+    .sponsor-note h3 { font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:700; margin-bottom:1rem; }
+    .sponsor-note p { color:var(--muted); max-width:500px; margin:0 auto 2rem; line-height:1.7; }
+
+    /* CONTACT */
+    #contact { background:var(--bg2); }
+    .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:3rem; }
+    .contact-card {
+      background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:2rem;
+    }
+    .contact-card h3 { font-family:'Barlow Condensed',sans-serif; font-size:1.3rem; font-weight:700; margin-bottom:0.5rem; }
+    .contact-card p { color:var(--muted); font-size:0.9rem; line-height:1.6; margin-bottom:1rem; }
+    .contact-card a { color:var(--accent); text-decoration:none; font-size:0.9rem; font-weight:500; }
+    .contact-card a:hover { text-decoration:underline; }
+
+    /* FOOTER */
+    footer { background:var(--bg); border-top:1px solid var(--border); padding:4rem 2.5rem 2rem; }
+    .footer-grid {
+      display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+      gap:3rem; max-width:1200px; margin:0 auto;
+      padding-bottom:3rem; border-bottom:1px solid var(--border);
+    }
+    .footer-brand p { color:var(--muted); font-size:0.9rem; line-height:1.6; }
+    .footer-brand .brand-name {
+      font-family:'Barlow Condensed',sans-serif; font-size:1.4rem; font-weight:800;
+      color:var(--accent); display:block; margin-bottom:0.75rem; text-decoration:none;
+    }
+    .footer-brand .brand-name span { color:var(--text); }
+    .footer-social { display:flex; gap:0.75rem; margin-top:1.2rem; }
+    .social-btn {
+      width:36px; height:36px; background:var(--bg3); border:1px solid var(--border);
+      border-radius:6px; display:flex; align-items:center; justify-content:center;
+      text-decoration:none; font-size:0.9rem; color:var(--muted);
+      transition:border-color 0.2s, background 0.2s;
+    }
+    .social-btn:hover { border-color:var(--accent); background:rgba(232,160,32,0.1); color:var(--accent); }
+    .footer-col h4 { font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text); margin-bottom:1rem; }
+    .footer-col ul { list-style:none; }
+    .footer-col ul li { margin-bottom:0.6rem; }
+    .footer-col ul li a { color:var(--muted); text-decoration:none; font-size:0.9rem; transition:color 0.2s; }
+    .footer-col ul li a:hover { color:var(--accent); }
+    .footer-bottom {
+      display:flex; justify-content:space-between; align-items:center;
+      padding-top:2rem; max-width:1200px; margin:0 auto; flex-wrap:wrap; gap:1rem;
+    }
+    .footer-bottom p { color:var(--muted); font-size:0.85rem; }
+
+    /* MOBILE */
+    @media (max-width:768px) {
+      nav { padding:0 1.5rem; }
+      .nav-links { display:none; }
+      .nav-cta { display:none; }
+      .hamburger { display:flex; }
+      section { padding:4rem 1.5rem; }
+      .about-grid { grid-template-columns:1fr; gap:2.5rem; }
+      .comp-card { grid-template-columns:1fr; }
+      .contact-grid { grid-template-columns:1fr; }
+      .footer-grid { grid-template-columns:1fr 1fr; }
+    }
+
+    /* SCROLL REVEAL - visible by default, animated as enhancement */
+    .reveal {
+      opacity:1;
+      transform:none;
+      transition:opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal-stagger > * {
+      opacity:1;
+      transform:none;
+      transition:opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    }
+    /* js-ready class added by script before observer fires */
+    .js-ready .reveal {
+      opacity:0;
+      transform:translateY(32px);
+    }
+    .js-ready .reveal.visible {
+      opacity:1;
+      transform:none;
+    }
+    .js-ready .reveal-stagger > * {
+      opacity:0;
+      transform:translateY(24px);
+    }
+    .js-ready .reveal-stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:0s; }
+    .js-ready .reveal-stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:0.1s; }
+    .js-ready .reveal-stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:0.2s; }
+    .js-ready .reveal-stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:0.3s; }
+    .js-ready .reveal-stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:0.4s; }
+    .js-ready .reveal-stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay:0.5s; }
+    .js-ready .reveal-stagger.visible > *:nth-child(7) { opacity:1; transform:none; transition-delay:0.6s; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">USN<span> Argentum</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#sponsors">Sponsors</a></li>
+    <li><a href="rover-3d.html">Rover 3D View</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Support Us</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">
+      <span class="line1">Autonomous</span>
+      <span class="line2">Rescue Rover</span>
+    </h1>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p class="section-label">About Us</p>
+        <h2 class="section-title">Building a Rescue Rover from the Ground Up</h2>
+        <p class="section-body">
+          USN Argentum is a student team at the University of South-Eastern Norway designing and building a fully autonomous rover to compete in RoboCup Rescue 2026.
+        </p>
+        <div class="about-details">
+          <div class="about-detail-item">
+            <span class="about-detail-label">Competition</span>
+            RoboCup Rescue 2026, international autonomous robotics, disaster terrain navigation and victim detection without human control.
+          </div>
+          <div class="about-detail-item">
+            <span class="about-detail-label">Navigation</span>
+            Autonomous SLAM based mapping and navigation in unstructured environments.
+          </div>
+          <div class="about-detail-item">
+            <span class="about-detail-label">Technology</span>
+            ROS, embedded systems, computer vision for victim detection and a custom mechanical platform.
+          </div>
+          <div class="about-detail-item">
+            <span class="about-detail-label">Team</span>
+            7 students across mechanical engineering, computer engineering and economics.
+          </div>
+        </div>
+      </div>
+      <div>
+        <a href="rover-3d.html" class="rover-3d-link">
+          <div class="rover-3d-card">
+            <div class="rover-3d-card-inner">
+              <div class="rover-3d-icon">
+                <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="6" y="26" width="32" height="8" rx="4" stroke="#e8a020" stroke-width="1.5" fill="rgba(232,160,32,0.08)"/>
+                  <rect x="12" y="17" width="20" height="11" rx="3" stroke="#e8a020" stroke-width="1.5" fill="rgba(232,160,32,0.06)"/>
+                  <circle cx="13" cy="26" r="4" stroke="#e8a020" stroke-width="1.5" fill="rgba(232,160,32,0.1)"/>
+                  <circle cx="31" cy="26" r="4" stroke="#e8a020" stroke-width="1.5" fill="rgba(232,160,32,0.1)"/>
+                  <line x1="24" y1="17" x2="31" y2="8" stroke="#e8a020" stroke-width="1.8" stroke-linecap="round"/>
+                  <circle cx="32" cy="7" r="2.5" fill="#e8a020"/>
+                </svg>
+              </div>
+              <div class="rover-3d-card-text">
+                <span class="rover-3d-card-title">Rover 3D View</span>
+                <span class="rover-3d-card-sub">Interactive model: rotate, zoom, inspect</span>
+              </div>
+              <div class="rover-3d-card-arrow">→</div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">The People</p>
+      <h2 class="section-title">Meet the Team</h2>
+      <p class="section-body">Seven students from USN across mechanical, computer and economics.</p>
+    </div>
+    <div class="team-grid reveal-stagger">
+      <div class="team-card">
+        <div class="team-card-role">Project Lead</div>
+        <h4>Member Name</h4>
+        <div class="team-card-faculty">Mechanical Engineering</div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-role">Mechanical Engineer</div>
+        <h4>Member Name</h4>
+        <div class="team-card-faculty">Mechanical Engineering</div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-role">Mechanical Engineer</div>
+        <h4>Member Name</h4>
+        <div class="team-card-faculty">Mechanical Engineering</div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-role">Mechanical Engineer</div>
+        <h4>Member Name</h4>
+        <div class="team-card-faculty">Mechanical Engineering</div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-role">Software</div>
+        <h4>Member Name</h4>
+        <div class="team-card-faculty">Computer Engineering</div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-role">Finance & Sponsorship</div>
+        <h4>Member Name</h4>
+        <div class="team-card-faculty">Economics</div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-role">Project Management</div>
+        <h4>Member Name</h4>
+        <div class="team-card-faculty">Economics</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPONSORS -->
+<section id="sponsors">
+  <div class="container reveal">
+    <p class="section-label">Support</p>
+    <h2 class="section-title">Sponsors</h2>
+    <div class="sponsor-note">
+      <h3>Become a Sponsor</h3>
+      <p>Your brand on our rover, website and competition materials. Get in touch to discuss partnership opportunities.</p>
+      <a href="#contact" class="btn-primary">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container reveal">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-title">Contact</h2>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>General</h3>
+        <p>Questions and collaboration.</p>
+        <a href="/cdn-cgi/l/email-protection#e784888993868493a7929489869580828993928ac98988"><span class="__cf_email__" data-cfemail="a2c1cdccd6c3c1d6e2d7d1ccc3d0c5c7ccd6d7cf8ccccd">[email&#160;protected]</span></a>
+      </div>
+      <div class="contact-card">
+        <h3>Sponsorship</h3>
+        <p>Partnership and funding inquiries.</p>
+        <a href="/cdn-cgi/l/email-protection#5526253a3b263a271520263b342732303b2120387b3b3a"><span class="__cf_email__" data-cfemail="6211120d0c110d102217110c031005070c16170f4c0c0d">[email&#160;protected]</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="brand-name">USN<span> Argentum</span></a>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#sponsors">Sponsors</a></li>
+        <li><a href="rover-3d.html">Rover 3D View</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Get Involved</h4>
+      <ul>
+        <li><a href="#sponsors">Become a Sponsor</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:contact@usnargentum.no">contact@usnargentum.no</a></li>
+        <li><a href="#">USN, Norway</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© USN Argentum</p>
+    <p style="font-size:0.8rem;">Built for GitHub Pages</p>
+  </div>
+</footer>
+
+<script>
+  if ('IntersectionObserver' in window) {
+    document.body.classList.add('js-ready');
+    var revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function(el) { observer.observe(el); });
+  }
+
+  function toggleMenu() {
+    var links = document.querySelector('.nav-links');
+    var cta   = document.querySelector('.nav-cta');
+    if (links.style.display === 'flex') {
+      links.style.display = 'none';
+      if (cta) cta.style.display = 'none';
+    } else {
+      links.style.cssText = 'display:flex;flex-direction:column;position:fixed;top:68px;left:0;right:0;background:rgba(10,12,16,0.97);padding:2rem;gap:1.5rem;border-bottom:1px solid rgba(232,160,32,0.15);z-index:99;';
+      if (cta) cta.style.display = 'none';
+    }
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
