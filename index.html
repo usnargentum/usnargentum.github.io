@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>USN Argentum | Autonomous Rescue Rover</title>
+  <title>Argentum | Autonomous Rescue Rover</title>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --bg:     #0a0c10;
-      --bg2:    #0f1318;
-      --bg3:    #161b24;
-      --accent: #e8a020;
-      --accent2:#f0c060;
+      --bg:     #080808;
+      --bg2:    #0d0d0d;
+      --bg3:    #141414;
+      --accent: #2ecfcf;
+      --accent2:#5de0e0;
       --text:   #e8eaf0;
-      --muted:  #7a8090;
-      --border: rgba(232,160,32,0.15);
-      --card:   rgba(22,27,36,0.85);
+      --muted:  #6a7080;
+      --border: rgba(46,207,207,0.15);
+      --card:   rgba(20,20,20,0.9);
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -27,16 +27,15 @@
       position:fixed; top:0; left:0; right:0; z-index:100;
       display:flex; align-items:center; justify-content:space-between;
       padding:0 2.5rem; height:68px;
-      background:rgba(10,12,16,0.92);
+      background:rgba(8,8,8,0.92);
       backdrop-filter:blur(14px);
       border-bottom:1px solid var(--border);
     }
     .nav-logo {
-      font-family:'Barlow Condensed',sans-serif;
-      font-size:1.5rem; font-weight:800; letter-spacing:0.05em;
-      color:var(--accent); text-decoration:none;
+      text-decoration:none;
+      display:flex; align-items:center;
+      line-height:1;
     }
-    .nav-logo span { color:var(--text); }
     .nav-links { display:flex; gap:2rem; list-style:none; }
     .nav-links a {
       color:var(--muted); text-decoration:none; font-size:0.9rem;
@@ -65,15 +64,24 @@
     }
     .hero-bg {
       position:absolute; inset:0;
+      /* HERO BACKGROUND IMAGE 2: Replace "hero-bg.jpg" with your background image filename */
+      background-image: url('Image(4).jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .hero-bg::after {
+      content:'';
+      position:absolute; inset:0;
       background:
-        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(232,160,32,0.07) 0%, transparent 70%),
-        linear-gradient(180deg, #0a0c10 0%, #0f1318 100%);
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(46,207,207,0.06) 0%, transparent 70%),
+        linear-gradient(180deg, rgba(8,8,8,0.7) 0%, rgba(8,8,8,0.85) 100%);
     }
     .hero-grid {
       position:absolute; inset:0; opacity:0.04;
       background-image:
-        linear-gradient(var(--accent) 1px, transparent 1px),
-        linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+        linear-gradient(rgba(46,207,207,0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46,207,207,0.15) 1px, transparent 1px);
       background-size:60px 60px;
     }
     .hero-content { position:relative; max-width:760px; }
@@ -90,7 +98,7 @@
     section { padding:6rem 2.5rem; }
     .btn-primary {
       display:inline-block;
-      background:var(--accent); color:#000;
+      background:var(--accent); color:#080808;
       padding:0.75rem 2rem; border-radius:4px;
       font-weight:700; text-decoration:none; font-size:0.9rem;
       letter-spacing:0.06em; text-transform:uppercase;
@@ -109,7 +117,7 @@
     .section-body { color:var(--muted); line-height:1.8; max-width:620px; font-size:1rem; }
     .container { max-width:1200px; margin:0 auto; }
 
-    /* ABOUT () */
+    /* ABOUT (merged with competition) */
     #about { background:var(--bg2); }
     .about-grid {
       display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start;
@@ -133,7 +141,7 @@
     }
     .rover-3d-link:hover .rover-3d-card {
       border-color:var(--accent); transform:translateY(-3px);
-      box-shadow:0 8px 24px rgba(232,160,32,0.1);
+      box-shadow:0 8px 24px rgba(46,207,207,0.1);
     }
     .rover-3d-card-inner { display:flex; align-items:center; gap:1.2rem; padding:1.8rem; }
     .rover-3d-icon { flex-shrink:0; }
@@ -174,14 +182,14 @@
     }
     .sponsor-slot {
       width:160px; height:80px;
-      border:1px dashed rgba(232,160,32,0.25); border-radius:6px;
+      border:1px dashed rgba(46,207,207,0.25); border-radius:6px;
       display:flex; align-items:center; justify-content:center;
-      color:rgba(232,160,32,0.3); font-size:0.75rem;
+      color:rgba(46,207,207,0.3); font-size:0.75rem;
       letter-spacing:0.1em; text-transform:uppercase;
     }
     .sponsor-slot.usn {
       border-style:solid; border-color:var(--border);
-      background:rgba(232,160,32,0.05); color:var(--accent); font-weight:700;
+      background:rgba(46,207,207,0.05); color:var(--accent); font-weight:700;
     }
     .sponsor-note {
       background:var(--bg3); border:1px solid var(--border); border-radius:8px;
@@ -221,7 +229,7 @@
       text-decoration:none; font-size:0.9rem; color:var(--muted);
       transition:border-color 0.2s, background 0.2s;
     }
-    .social-btn:hover { border-color:var(--accent); background:rgba(232,160,32,0.1); color:var(--accent); }
+    .social-btn:hover { border-color:var(--accent); background:rgba(46,207,207,0.1); color:var(--accent); }
     .footer-col h4 { font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text); margin-bottom:1rem; }
     .footer-col ul { list-style:none; }
     .footer-col ul li { margin-bottom:0.6rem; }
@@ -283,7 +291,10 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">USN<span> Argentum</span></a>
+  <a href="#" class="nav-logo">
+    <!-- LOGO IMAGE 1: Replace "logo.jpg" with your logo filename -->
+    <img src="Image.jpg" alt="" style="height:40px;width:auto;display:block;"/>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#team">Team</a></li>
@@ -322,11 +333,11 @@
         <div class="about-details">
           <div class="about-detail-item">
             <span class="about-detail-label">Competition</span>
-            RoboCup Rescue 2026, international autonomous robotics, disaster terrain navigation and victim detection without human control.
+            RoboCup Rescue 2026 — international autonomous robotics, disaster terrain navigation and victim detection without human control.
           </div>
           <div class="about-detail-item">
             <span class="about-detail-label">Navigation</span>
-            Autonomous SLAM based mapping and navigation in unstructured environments.
+            Autonomous SLAM-based mapping and navigation in unstructured environments.
           </div>
           <div class="about-detail-item">
             <span class="about-detail-label">Technology</span>
@@ -344,17 +355,17 @@
             <div class="rover-3d-card-inner">
               <div class="rover-3d-icon">
                 <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="6" y="26" width="32" height="8" rx="4" stroke="#e8a020" stroke-width="1.5" fill="rgba(232,160,32,0.08)"/>
-                  <rect x="12" y="17" width="20" height="11" rx="3" stroke="#e8a020" stroke-width="1.5" fill="rgba(232,160,32,0.06)"/>
-                  <circle cx="13" cy="26" r="4" stroke="#e8a020" stroke-width="1.5" fill="rgba(232,160,32,0.1)"/>
-                  <circle cx="31" cy="26" r="4" stroke="#e8a020" stroke-width="1.5" fill="rgba(232,160,32,0.1)"/>
-                  <line x1="24" y1="17" x2="31" y2="8" stroke="#e8a020" stroke-width="1.8" stroke-linecap="round"/>
-                  <circle cx="32" cy="7" r="2.5" fill="#e8a020"/>
+                  <rect x="6" y="26" width="32" height="8" rx="4" stroke="#2ecfcf" stroke-width="1.5" fill="rgba(46,207,207,0.08)"/>
+                  <rect x="12" y="17" width="20" height="11" rx="3" stroke="#2ecfcf" stroke-width="1.5" fill="rgba(46,207,207,0.06)"/>
+                  <circle cx="13" cy="26" r="4" stroke="#2ecfcf" stroke-width="1.5" fill="rgba(46,207,207,0.1)"/>
+                  <circle cx="31" cy="26" r="4" stroke="#2ecfcf" stroke-width="1.5" fill="rgba(46,207,207,0.1)"/>
+                  <line x1="24" y1="17" x2="31" y2="8" stroke="#2ecfcf" stroke-width="1.8" stroke-linecap="round"/>
+                  <circle cx="32" cy="7" r="2.5" fill="#2ecfcf"/>
                 </svg>
               </div>
               <div class="rover-3d-card-text">
                 <span class="rover-3d-card-title">Rover 3D View</span>
-                <span class="rover-3d-card-sub">Interactive model: rotate, zoom, inspect</span>
+                <span class="rover-3d-card-sub">Interactive model — rotate, zoom, inspect</span>
               </div>
               <div class="rover-3d-card-arrow">→</div>
             </div>
@@ -371,7 +382,7 @@
     <div class="reveal">
       <p class="section-label">The People</p>
       <h2 class="section-title">Meet the Team</h2>
-      <p class="section-body">Seven students from USN across mechanical, computer and economics.</p>
+      <p class="section-body">Seven students from USN across mechanical, software and operations.</p>
     </div>
     <div class="team-grid reveal-stagger">
       <div class="team-card">
@@ -395,7 +406,7 @@
         <div class="team-card-faculty">Mechanical Engineering</div>
       </div>
       <div class="team-card">
-        <div class="team-card-role">Software</div>
+        <div class="team-card-role">Software & Autonomy</div>
         <h4>Member Name</h4>
         <div class="team-card-faculty">Computer Engineering</div>
       </div>
@@ -450,7 +461,11 @@
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <a href="#" class="brand-name">USN<span> Argentum</span></a>
+      <a href="#" class="brand-name">
+        <!-- LOGO IMAGE 1: Same logo file as nav — replace "Image.jpg" with your logo filename -->
+        <img src="Image.jpg" alt="" style="height:48px;width:auto;display:block;"/>
+      </a>
+      </a>
     </div>
     <div class="footer-col">
       <h4>Explore</h4>
@@ -471,7 +486,7 @@
     <div class="footer-col">
       <h4>Contact</h4>
       <ul>
-        <li><a href="mailto:contact@usnargentum.no">contact@usnargentum.no</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#7d1e1213091c1e093d080e131c0f1a1813090810531312"><span class="__cf_email__" data-cfemail="24474b4a504547506451574a455643414a5051490a4a4b">[email&#160;protected]</span></a></li>
         <li><a href="#">USN, Norway</a></li>
       </ul>
     </div>
@@ -481,6 +496,7 @@
     <p style="font-size:0.8rem;">Built for GitHub Pages</p>
   </div>
 </footer>
+
 
 <script>
   if ('IntersectionObserver' in window) {
@@ -500,11 +516,14 @@
   function toggleMenu() {
     var links = document.querySelector('.nav-links');
     var cta   = document.querySelector('.nav-cta');
-    if (links.style.display === 'flex') {
-      links.style.display = 'none';
-      if (cta) cta.style.display = 'none';
+    var isOpen = links.getAttribute('data-open') === 'true';
+    if (isOpen) {
+      links.removeAttribute('style');
+      links.setAttribute('data-open', 'false');
+      if (cta) cta.style.display = '';
     } else {
-      links.style.cssText = 'display:flex;flex-direction:column;position:fixed;top:68px;left:0;right:0;background:rgba(10,12,16,0.97);padding:2rem;gap:1.5rem;border-bottom:1px solid rgba(232,160,32,0.15);z-index:99;';
+      links.style.cssText = 'display:flex;flex-direction:column;position:fixed;top:68px;left:0;right:0;background:rgba(8,8,8,0.97);padding:2rem;gap:1.5rem;border-bottom:1px solid rgba(46,207,207,0.15);z-index:99;';
+      links.setAttribute('data-open', 'true');
       if (cta) cta.style.display = 'none';
     }
   }
@@ -512,7 +531,14 @@
   document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     a.addEventListener('click', function(e) {
       var target = document.querySelector(a.getAttribute('href'));
-      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      if (target) {
+        e.preventDefault();
+        // close mobile menu if open
+        var links = document.querySelector('.nav-links');
+        links.removeAttribute('style');
+        links.setAttribute('data-open', 'false');
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   });
 </script>
