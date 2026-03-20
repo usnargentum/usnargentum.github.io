@@ -67,7 +67,8 @@
       /* HERO BACKGROUND IMAGE 2: Replace "hero-bg.jpg" with your background image filename */
       background-image: url('Image (4).jpg');
       background-size: cover;
-      background-position: center;
+      background-position: center center;
+      background-attachment: scroll;
       background-repeat: no-repeat;
     }
     .hero-bg::after {
@@ -75,7 +76,7 @@
       position:absolute; inset:0;
       background:
         radial-gradient(ellipse 80% 60% at 50% 40%, rgba(46,207,207,0.06) 0%, transparent 70%),
-        linear-gradient(180deg, rgba(8,8,8,0.2) 0%, rgba(8,8,8,0.3) 100%);
+        linear-gradient(180deg, rgba(8,8,8,0.5) 0%, rgba(8,8,8,0.6) 100%);
     }
     .hero-grid {
       position:absolute; inset:0; opacity:0.04;
